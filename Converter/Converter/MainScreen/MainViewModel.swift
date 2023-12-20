@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-class ViewModel: ObservableObject {
+class MainViewModel: ObservableObject {
     
     @Published var ratesDict: [String:Double] = [ : ]
     @Published var value1 = ""
@@ -31,7 +31,7 @@ class ViewModel: ObservableObject {
     
     
     func fetchData(completion: @escaping (Result<Convert, Error>) -> Void) {
-        let url: String = "https://v6.exchangerate-api.com/v6/9695387ec951afa1f96555a6/latest/USD"
+        let url: String = "https://v6.exchangerate-api.com/v6/350f9dfe6c93f5412d501256/latest/USD"
         guard let url = URL(string: url) else {
             completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
             return
@@ -59,7 +59,7 @@ class ViewModel: ObservableObject {
     }
     
     func fetchResult(completion: @escaping (Result<Converting, Error>) -> Void) {
-        guard let url = URL(string: "https://v6.exchangerate-api.com/v6/9695387ec951afa1f96555a6/pair/\(selestedCurrency1)/\(selestedCurrency2)/\(value1)") else {
+        guard let url = URL(string: "https://v6.exchangerate-api.com/v6/350f9dfe6c93f5412d501256/pair/\(selestedCurrency1)/\(selestedCurrency2)/\(value1)") else {
             print("Invalid URL")
             return
         }
@@ -147,46 +147,3 @@ class ViewModel: ObservableObject {
     }
 }
 
-struct Convert: Codable {
-    let result: String
-    let documentation, termsOfUse: String
-    let timeLastUpdateUnix: Int
-    let timeLastUpdateUTC: String
-    let timeNextUpdateUnix: Int
-    let timeNextUpdateUTC, baseCode: String
-    let conversionRates: [String: Double]
-    
-    enum CodingKeys: String, CodingKey {
-        case result, documentation
-        case termsOfUse = "terms_of_use"
-        case timeLastUpdateUnix = "time_last_update_unix"
-        case timeLastUpdateUTC = "time_last_update_utc"
-        case timeNextUpdateUnix = "time_next_update_unix"
-        case timeNextUpdateUTC = "time_next_update_utc"
-        case baseCode = "base_code"
-        case conversionRates = "conversion_rates"
-    }
-}
-
-struct Converting: Codable {
-    let result: String
-    let documentation, termsOfUse: String
-    let timeLastUpdateUnix: Int
-    let timeLastUpdateUTC: String
-    let timeNextUpdateUnix: Int
-    let timeNextUpdateUTC, baseCode, targetCode: String
-    let conversionRate, conversionResult: Double
-    
-    enum CodingKeys: String, CodingKey {
-        case result, documentation
-        case termsOfUse = "terms_of_use"
-        case timeLastUpdateUnix = "time_last_update_unix"
-        case timeLastUpdateUTC = "time_last_update_utc"
-        case timeNextUpdateUnix = "time_next_update_unix"
-        case timeNextUpdateUTC = "time_next_update_utc"
-        case baseCode = "base_code"
-        case targetCode = "target_code"
-        case conversionRate = "conversion_rate"
-        case conversionResult = "conversion_result"
-    }
-}

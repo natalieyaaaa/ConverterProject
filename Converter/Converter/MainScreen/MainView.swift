@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct MainView: View {
     
-    @StateObject var vm = ViewModel()
+    @StateObject var vm = MainViewModel()
     
     var body: some View {
         ZStack {
@@ -152,5 +152,5 @@ struct ContentView: View {
     }
 }
 #Preview {
-    ContentView()
+    MainView()
 }
